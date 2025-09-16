@@ -3,8 +3,8 @@ import HighchartsReact from "highcharts-react-official";
 import HighchartsMore from "highcharts/highcharts-more";
 import SolidGauge from "highcharts/modules/solid-gauge";
 import React, { useEffect, useRef, useState } from "react";
-import { api_url, home, username, password } from "../../Variables";
 import Close from "../Svg/close";
+import { get_station_data, get_station_list, get_home_data } from "../../lib/constants";
 
 HighchartsMore(Highcharts);
 SolidGauge(Highcharts);
@@ -141,57 +141,40 @@ export default function GuageChart(props) {
 	const [aqi, setAqi] = useState("");
 	const [defaultStation, setDefaultStation] = useState(0);
 	const [defaultValue, setDefaultValue] = useState(0);
-	const [ stationList, setStationList ] = useState( "" );
+	const [stationList, setStationList] = useState("");
 	const [isVisible, setIsVisible] = useState(false);
-	const componentRef = useRef( null );
+	const componentRef = useRef(null);
 
-		useEffect(() => {
-			const observer = new IntersectionObserver(
-				([entry]) => {
-					setIsVisible(entry.isIntersecting);
-				},
-				{
-					threshold: 0.5,
-				}
-			);
-
-			if (componentRef.current) {
-				observer.observe(componentRef.current);
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				setIsVisible(entry.isIntersecting);
+			},
+			{
+				threshold: 0.5,
 			}
+		);
 
-			return () => {
-				if (componentRef.current) {
-					observer.unobserve(componentRef.current);
-				}
-			};
-		}, []);
-	
+		if (componentRef.current) {
+			observer.observe(componentRef.current);
+		}
+
+		return () => {
+			if (componentRef.current) {
+				observer.unobserve(componentRef.current);
+			}
+		};
+	}, []);
+
 	useEffect(() => {
 		if (isVisible) {
 			StationNames();
 		}
 	}, [isVisible]);
 
-	
-	const StationNames = async () => {
-		const requestOptions = {
-			method: "GET",
-			redirect: "follow",
-			headers: {
-				"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-			},
-		};
 
-		fetch(api_url + "stations_list", requestOptions)
-			.then((response) => response.json())
-			.then( ( result ) =>
-			{
-				if ( result )
-				{
-					setStationList( result );
-				}
-			})
-			.catch((error) => console.error(error));
+	const StationNames = async () => {
+		setStationList(get_station_list);
 	};
 
 	useEffect(() => {
@@ -199,24 +182,8 @@ export default function GuageChart(props) {
 	}, []);
 
 	const Default = () => {
-		const requestOptions = {
-			method: "GET",
-			redirect: "follow",
-			headers: {
-				"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-			},
-		};
-
-		fetch(home, requestOptions)
-			.then((response) => response.json())
-			.then((result) => {
-				if ( result )
-				{
-					setDefaultStation(result.default_aqi.station);
-					setAqi(result.default_aqi);
-				}
-			})
-			.catch((error) => console.error(error));
+		setDefaultStation(get_home_data.default_aqi.station);
+		setAqi(get_home_data.default_aqi);
 	};
 
 	useEffect(() => {
@@ -273,35 +240,14 @@ export default function GuageChart(props) {
 	}, [props.pollutant, defaultStation, stationData]);
 
 	const GetAQI = () => {
-		const formdata = new FormData();
-		formdata.append("station_id", defaultStation);
-
-		const requestOptions = {
-			method: "POST",
-			body: formdata,
-			redirect: "follow",
-			headers: {
-				"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-			},
-		};
-
-		fetch(api_url + "get_station_data", requestOptions)
-			.then((response) => response.json())
-			.then((result) => {
-				if ( result )
-				{
-					setStationData(result);
-				}
-			})
-			.catch((error) => console.error(error));
+		setStationData(get_station_data);
 	};
 
 	return (
 		<div
 			ref={componentRef}
-			className={`charts bg-white absolute sm:min-h-[50%] sm:max-h-[94%] sm:w-[100vw] tab:min-h-[40%] tab:max-h-[94%] tab:w-[100vw] lm:min-h-[24%] lm:max-h-[94%] lm:w-[100vw] sl:min-h-[30%] sl:max-h-[94%] sl:w-[60vw] lt:min-h-[50%] lt:max-h-[94%] lt:w-[34vw] sm:top-[4rem] lm:top-[5.6rem] tab:top-[5.8rem] sl:top-[8vw] lt:top-[3.8vw]  border border-[#e7e7e7] rounded-r-[0.8vw] ${
-				props.show ? "visible" : "hidden"
-			}`}
+			className={`charts bg-white absolute sm:min-h-[50%] sm:max-h-[94%] sm:w-[100vw] tab:min-h-[40%] tab:max-h-[94%] tab:w-[100vw] lm:min-h-[24%] lm:max-h-[94%] lm:w-[100vw] sl:min-h-[30%] sl:max-h-[94%] sl:w-[60vw] lt:min-h-[50%] lt:max-h-[94%] lt:w-[34vw] sm:top-[4rem] lm:top-[5.6rem] tab:top-[5.8rem] sl:top-[8vw] lt:top-[3.8vw]  border border-[#e7e7e7] rounded-r-[0.8vw] ${props.show ? "visible" : "hidden"
+				}`}
 		>
 			<div className="relative sm:h-[4rem] lm:h-[5rem] tab:h-[5.6rem] sl:h-[5.8vw] lt:h-[4vw] border border-[#e7e7e7]">
 				<h1 className="text-primary font-[600] sm:text-[2rem] lm:text-[2.6rem] tab:text-[3.2rem] sl:text-[3.2vw] lt:text-[1.6vw] py-[0.2vw] px-[1.2vw]">
@@ -327,11 +273,10 @@ export default function GuageChart(props) {
 					{stationList &&
 						stationList.map((station, index) => (
 							<div
-								className={`sm:text-[1.4rem] lm:text-[1.6rem] tab:text-[2rem] sl:text-[1.6vw] lt:text-[1vw] text-start cursor-pointer px-[0.4vw] sm:py-[0.4rem] sl:py-[0.4vw] lt:py-[0.2vw] my-[0.24vw] ${
-									station.id === defaultStation
+								className={`sm:text-[1.4rem] lm:text-[1.6rem] tab:text-[2rem] sl:text-[1.6vw] lt:text-[1vw] text-start cursor-pointer px-[0.4vw] sm:py-[0.4rem] sl:py-[0.4vw] lt:py-[0.2vw] my-[0.24vw] ${station.id === defaultStation
 										? "rounded-lg bg-primary text-white text-[1.4vw] shadow"
 										: ""
-								}`}
+									}`}
 								onClick={() => {
 									setDefaultStation(station.id);
 								}}

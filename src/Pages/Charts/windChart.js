@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { api_url, username, password } from "../../Variables";
 import Highcharts from "highcharts/highstock";
 import HcMore from "highcharts/highcharts-more";
 import HighchartsReact from "highcharts-react-official";
+import { get_graphs1, get_graphs2 } from "../../lib/constants";
 import moment from 'moment';
 HcMore( Highcharts );
 
@@ -145,24 +145,7 @@ export default function WindChart ( props )
 	{
 		if ( props.station !== "" )
 		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch( api_url + `get_graphs?station=${ props.station }`, requestOptions )
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result )
-					{
-						setWind( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
+			setWind( get_graphs1 );
 		} else if ( props.station === "" )
 		{
 			setWind( "" );
@@ -170,24 +153,7 @@ export default function WindChart ( props )
 
 		if ( props.station2 !== "" )
 		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch( api_url + `get_graphs?station=${ props.station2 }`, requestOptions )
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result )
-					{
-						setWind2( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
+			setWind2( get_graphs2 );
 		} else if ( props.station2 === "" )
 		{
 			setWind2( "" );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { api_url, username, password } from "../../Variables";
 import moment from 'moment';
+import { get_graphs1, get_graphs2 } from "../../lib/constants";
 
 export default function BarChart ( props )
 {
@@ -69,46 +69,12 @@ export default function BarChart ( props )
 	{
 		if ( props.station )
 		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch( api_url + `get_graphs?station=${ props.station }`, requestOptions )
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result)
-					{
-						setAqi( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
+			setAqi( get_graphs1 );
 		}
 
 		if ( props.station2 )
 		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch( api_url + `get_graphs?station=${ props.station2 }`, requestOptions )
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result )
-					{
-						setAqi2( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
+			setAqi2( get_graphs2);
 		}
 	};
 

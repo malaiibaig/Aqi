@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { api_url, username, password } from "../../Variables";
 import moment from 'moment';
+import { get_gases1, get_gases2 } from "../../lib/constants";
 
-export default function LineChart ( props )
-{
-	const [ chartOptions, setChartOptions ] = useState( {
+export default function LineChart(props) {
+	const [chartOptions, setChartOptions] = useState({
 		credits: {
 			enabled: false,
 		},
@@ -41,31 +40,25 @@ export default function LineChart ( props )
 				opposite: true,
 			},
 		],
-	} );
+	});
 
-	const [ gases, setGases ] = useState( "" );
-	const [ gases2, setGases2 ] = useState( "" );
+	const [gases, setGases] = useState("");
+	const [gases2, setGases2] = useState("");
 
 
-	useEffect( () =>
-	{
+	useEffect(() => {
 		selectedGasesHandler();
-	}, [ props.gasesStation, props.gasesStation2 ] );
+	}, [props.gasesStation, props.gasesStation2]);
 
-	useEffect( () =>
-	{
-		if ( gases !== "" && props.gasStats === "8hourly" )
-		{
+	useEffect(() => {
+		if (gases !== "" && props.gasStats === "8hourly") {
 			GetChartGas8Hours();
-		} else if ( gases !== "" && props.gasStats === "daily" )
-		{
+		} else if (gases !== "" && props.gasStats === "daily") {
 			GetChartGasDaily();
-		} else if ( gases !== "" && props.gasStats === "monthly" )
-		{
+		} else if (gases !== "" && props.gasStats === "monthly") {
 			GetChartGasMonthly();
 		}
-		else if ( gases !== "" && props.gasStats === "yearly" )
-		{
+		else if (gases !== "" && props.gasStats === "yearly") {
 			GetChartGasYearly();
 		}
 	}, [
@@ -78,89 +71,45 @@ export default function LineChart ( props )
 		props.gasesStation2,
 		props.station1,
 		props.station2,
-	] );
+	]);
 
-	const selectedGasesHandler = () =>
-	{
-		if ( props.gasesStation !== "" )
-		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch( api_url + `gases-new?station=${ props.gasesStation }`, requestOptions )
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result )
-					{
-						setGases( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
-		} else if ( props.gasesStation === "" )
-		{
-			setGases( "" );
+	const selectedGasesHandler = () => {
+		if (props.gasesStation !== "") {
+			setGases(get_gases1);
+		} else if (props.gasesStation === "") {
+			setGases("");
 		}
-		if ( props.gasesStation2 !== "" )
-		{
-			const requestOptions = {
-				method: "GET",
-				redirect: "follow",
-				headers: {
-					"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-				},
-			};
-
-			fetch(
-				api_url + `gases-new?station=${ props.gasesStation2 }`,
-				requestOptions
-			)
-				.then( ( response ) => response.json() )
-				.then( ( result ) =>
-				{
-					if ( result )
-					{
-						setGases2( result );
-					}
-				} )
-				.catch( ( error ) => console.error( error ) );
-		} else if ( props.gasesStation2 === "" )
-		{
-			setGases2( "" );
+		if (props.gasesStation2 !== "") {
+			setGases2(get_gases2);
+		} else if (props.gasesStation2 === "") {
+			setGases2("");
 		}
 	};
 
-	const GetChartGas8Hours = () =>
-	{
-		if ( !gases || !gases.hourly_8 || !gases.units )
-		{
+	const GetChartGas8Hours = () => {
+		if (!gases || !gases.hourly_8 || !gases.units) {
 			return;
 		}
 
 		const filteredGases = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases && gases.hourly_8 && gases.hourly_8.hasOwnProperty( gas )
+				(gas) => gases && gases.hourly_8 && gases.hourly_8.hasOwnProperty(gas)
 			)
 			: [];
 
 		const filteredGases2 = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases2 && gases2.hourly_8 && gases2.hourly_8.hasOwnProperty( gas )
+				(gas) => gases2 && gases2.hourly_8 && gases2.hourly_8.hasOwnProperty(gas)
 			)
 			: [];
 
-		const filteredUnits = Object.entries( ( gases && gases.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits = Object.entries((gases && gases.units) || {})
+			.filter(([key]) => filteredGases.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-		const filteredUnits2 = Object.entries( ( gases2 && gases2.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases2.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits2 = Object.entries((gases2 && gases2.units) || {})
+			.filter(([key]) => filteredGases2.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
 		const customSeriesColors = {
 			NO2: "#349bdb",
@@ -178,14 +127,13 @@ export default function LineChart ( props )
 			PM25: "#349bdb",
 		};
 
-		const adjustOpacity = ( hexColor, opacity ) =>
-		{
-			const c = hexColor.substring( 1 );
-			const rgb = parseInt( c, 16 );
-			const r = ( rgb >> 16 ) & 0xff;
-			const g = ( rgb >> 8 ) & 0xff;
-			const b = ( rgb >> 0 ) & 0xff;
-			return `rgba(${ r },${ g },${ b },${ opacity })`;
+		const adjustOpacity = (hexColor, opacity) => {
+			const c = hexColor.substring(1);
+			const rgb = parseInt(c, 16);
+			const r = (rgb >> 16) & 0xff;
+			const g = (rgb >> 8) & 0xff;
+			const b = (rgb >> 0) & 0xff;
+			return `rgba(${r},${g},${b},${opacity})`;
 		};
 
 		const timeOpacity = {
@@ -194,31 +142,28 @@ export default function LineChart ( props )
 			"04:00 PM": 0.4,
 		};
 
-		const formatData = ( data ) =>
-		{
+		const formatData = (data) => {
 			const formattedData = [];
 			const currentYear = moment().year();
 
-			for ( const date in data )
-			{
-				for ( const time in data[ date ] )
-				{
-					const datetimeString = `${ date } ${ currentYear } ${ time }`;
-					const datetime = moment( datetimeString, 'MMM DD YYYY HH:mm' );
-					const formattedDate = datetime.format( 'DD MMM' );
-					const formattedTime = datetime.format( 'hh:mm A' );
-					formattedData.push( [ formattedDate, formattedTime, parseFloat( data[ date ][ time ] ) ] );
+			for (const date in data) {
+				for (const time in data[date]) {
+					const datetimeString = `${date} ${currentYear} ${time}`;
+					const datetime = moment(datetimeString, 'MMM DD YYYY HH:mm');
+					const formattedDate = datetime.format('DD MMM');
+					const formattedTime = datetime.format('hh:mm A');
+					formattedData.push([formattedDate, formattedTime, parseFloat(data[date][time])]);
 				}
 			}
 			return formattedData;
 		};
 
-		const seriesData = filteredGases.map( ( gas ) => ( {
+		const seriesData = filteredGases.map((gas) => ({
 			name: props.gasesStation2
-				? `${ gas } (${ filteredUnits[ gas ] || "" }): ${ props.station1 }`
-				: `${ gas } (${ filteredUnits[ gas ] || "" })`,
-			data: gases && gases.hourly_8 && formatData( gases.hourly_8[ gas ] ),
-			color: customSeriesColors[ gas ],
+				? `${gas} (${filteredUnits[gas] || ""}): ${props.station1}`
+				: `${gas} (${filteredUnits[gas] || ""})`,
+			data: gases && gases.hourly_8 && formatData(gases.hourly_8[gas]),
+			color: customSeriesColors[gas],
 			stack: 'gas1',
 			marker: {
 				enabled: true,
@@ -228,80 +173,72 @@ export default function LineChart ( props )
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const seriesData2 = filteredGases2.map( ( gas ) => ( {
-			name: `${ gas } (${ filteredUnits2[ gas ] || "" }): ${ props.station2 }`,
-			data: gases2 && gases2.hourly_8 && formatData( gases2.hourly_8[ gas ] ),
-			color: customSeriesColors[ gas ],
+		const seriesData2 = filteredGases2.map((gas) => ({
+			name: `${gas} (${filteredUnits2[gas] || ""}): ${props.station2}`,
+			data: gases2 && gases2.hourly_8 && formatData(gases2.hourly_8[gas]),
+			color: customSeriesColors[gas],
 			stack: 'gas2',
 			marker: {
 				enabled: true,
 				radius: 3.4,
 				lineWidth: 1,
-				fillColor: customSeriesColors[ gas ],
+				fillColor: customSeriesColors[gas],
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const dates = [ ...new Set( seriesData.flatMap( ( series ) => series.data.map( ( item ) => item[ 0 ] ) ) ) ];
-		const dates2 = [ ...new Set( seriesData2.flatMap( ( series ) => series.data.map( ( item ) => item[ 0 ] ) ) ) ];
+		const dates = [...new Set(seriesData.flatMap((series) => series.data.map((item) => item[0])))];
+		const dates2 = [...new Set(seriesData2.flatMap((series) => series.data.map((item) => item[0])))];
 
-		const combinedSeriesData = [ ...seriesData ];
-		const combinedSeriesData2 = [ ...seriesData2 ];
+		const combinedSeriesData = [...seriesData];
+		const combinedSeriesData2 = [...seriesData2];
 
 		const allSeries = [];
 
-		combinedSeriesData.forEach( ( series ) =>
-		{
-			series.data.forEach( ( [ date, time, value ] ) =>
-			{
-				const seriesName = `${ series.name } - ${ time }`;
-				let seriesIndex = allSeries.findIndex( ( s ) => s.name === seriesName );
-				if ( seriesIndex === -1 )
-				{
-					allSeries.push( {
+		combinedSeriesData.forEach((series) => {
+			series.data.forEach(([date, time, value]) => {
+				const seriesName = `${series.name} - ${time}`;
+				let seriesIndex = allSeries.findIndex((s) => s.name === seriesName);
+				if (seriesIndex === -1) {
+					allSeries.push({
 						name: seriesName,
-						data: Array( dates.length ).fill( 0 ),
-						color: adjustOpacity( series.color, timeOpacity[ time ] || 1.0 ),
+						data: Array(dates.length).fill(0),
+						color: adjustOpacity(series.color, timeOpacity[time] || 1.0),
 						stack: 'gas1'
-					} );
+					});
 					seriesIndex = allSeries.length - 1;
 				}
-				const dateIndex = dates.indexOf( date );
-				if ( dateIndex !== -1 )
-				{
-					allSeries[ seriesIndex ].data[ dateIndex ] += value;
+				const dateIndex = dates.indexOf(date);
+				if (dateIndex !== -1) {
+					allSeries[seriesIndex].data[dateIndex] += value;
 				}
-			} );
-		} );
+			});
+		});
 
-		combinedSeriesData2.forEach( ( series ) =>
-		{
-			series.data.forEach( ( [ date, time, value ] ) =>
-			{
-				const seriesName = `${ series.name } - ${ time }`;
-				let seriesIndex = allSeries.findIndex( ( s ) => s.name === seriesName );
-				if ( seriesIndex === -1 )
-				{
-					allSeries.push( {
+		combinedSeriesData2.forEach((series) => {
+			series.data.forEach(([date, time, value]) => {
+				const seriesName = `${series.name} - ${time}`;
+				let seriesIndex = allSeries.findIndex((s) => s.name === seriesName);
+				if (seriesIndex === -1) {
+					allSeries.push({
 						name: seriesName,
-						data: Array( dates2.length ).fill( 0 ),
-						color: adjustOpacity( series.color, timeOpacity[ time ] || 1.0 ),
+						data: Array(dates2.length).fill(0),
+						color: adjustOpacity(series.color, timeOpacity[time] || 1.0),
 						stack: 'gas2'
-					} );
+					});
 					seriesIndex = allSeries.length - 1;
 				}
-				const dateIndex = dates2.indexOf( date );
-				if ( dateIndex !== -1 )
-				{
-					allSeries[ seriesIndex ].data[ dateIndex ] += value;
+				const dateIndex = dates2.indexOf(date);
+				if (dateIndex !== -1) {
+					allSeries[seriesIndex].data[dateIndex] += value;
 				}
-			} );
-		} );
+			});
+		});
 
-		setChartOptions( ( prevOptions ) => ( {
+		setChartOptions((prevOptions) => ({
 			...prevOptions,
 			series: allSeries,
 			chart: {
@@ -315,8 +252,7 @@ export default function LineChart ( props )
 					stacking: 'normal',
 					dataLabels: {
 						enabled: true,
-						formatter: function ()
-						{
+						formatter: function () {
 							return this.y;
 						},
 					},
@@ -341,36 +277,34 @@ export default function LineChart ( props )
 				headerFormat: '<b>{point.x}</b><br/>',
 				pointFormat: '{series.name}: {point.y}<br/>',
 			},
-		} ) );
+		}));
 	};
 
 
-	const GetChartGasDaily = () =>
-	{
-		if ( !gases || !gases.hourly || !gases.units )
-		{
+	const GetChartGasDaily = () => {
+		if (!gases || !gases.hourly || !gases.units) {
 			return;
 		}
 
 		const filteredGases = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases && gases.hourly && gases.hourly.hasOwnProperty( gas )
+				(gas) => gases && gases.hourly && gases.hourly.hasOwnProperty(gas)
 			)
 			: [];
 
 		const filteredGases2 = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases2 && gases2.hourly && gases2.hourly.hasOwnProperty( gas )
+				(gas) => gases2 && gases2.hourly && gases2.hourly.hasOwnProperty(gas)
 			)
 			: [];
 
-		const filteredUnits = Object.entries( ( gases && gases.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits = Object.entries((gases && gases.units) || {})
+			.filter(([key]) => filteredGases.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-		const filteredUnits2 = Object.entries( ( gases2 && gases2.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases2.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits2 = Object.entries((gases2 && gases2.units) || {})
+			.filter(([key]) => filteredGases2.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
 		const customSeriesColors = {
 			NO2: "#349bdb",
@@ -388,12 +322,12 @@ export default function LineChart ( props )
 			PM25: "#349bdb",
 		};
 
-		const seriesData = filteredGases.map( ( gas ) => ( {
+		const seriesData = filteredGases.map((gas) => ({
 			name: props.gasesStation2
-				? `${ gas } (${ filteredUnits[ gas ] || "" }): ${ props.station1 }`
-				: `${ gas } (${ filteredUnits[ gas ] || "" })`,
-			data: gases.hourly[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+				? `${gas} (${filteredUnits[gas] || ""}): ${props.station1}`
+				: `${gas} (${filteredUnits[gas] || ""})`,
+			data: gases.hourly[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
@@ -402,25 +336,25 @@ export default function LineChart ( props )
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const seriesData2 = filteredGases2.map( ( gas ) => ( {
-			name: `${ gas } (${ filteredUnits2[ gas ] || "" }): ${ props.station2 }`,
-			data: gases2.hourly[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+		const seriesData2 = filteredGases2.map((gas) => ({
+			name: `${gas} (${filteredUnits2[gas] || ""}): ${props.station2}`,
+			data: gases2.hourly[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
 				lineWidth: 1,
-				fillColor: customSeriesColors[ gas ],
+				fillColor: customSeriesColors[gas],
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const combinedSeriesData = [ ...seriesData, ...seriesData2 ];
+		const combinedSeriesData = [...seriesData, ...seriesData2];
 
-		setChartOptions( ( prevOptions ) => ( {
+		setChartOptions((prevOptions) => ({
 			...prevOptions,
 			series: combinedSeriesData,
 			chart: {
@@ -432,52 +366,50 @@ export default function LineChart ( props )
 			xAxis: {
 				...prevOptions.xAxis,
 				categories: filteredGases.length > 0
-					? gases.hourly[ filteredGases[ 0 ] ].map( ( [ time ] ) => time )
+					? gases.hourly[filteredGases[0]].map(([time]) => time)
 					: [],
 			},
 			yAxis: [
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[0]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] && prevOptions.yAxis[ 0 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[0] && prevOptions.yAxis[0].title),
+						text: `Concentrations (${filteredUnits[filteredGases[0]] || ""})`,
 					},
 				},
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[1]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] && prevOptions.yAxis[ 1 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases.slice( -1 )[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[1] && prevOptions.yAxis[1].title),
+						text: `Concentrations (${filteredUnits[filteredGases.slice(-1)[0]] || ""})`,
 					},
 					opposite: true,
 				},
 			],
-		} ) );
+		}));
 	};
 
 
-	const GetChartGasMonthly = () =>
-	{
-		if ( !gases || !gases.units )
-		{
+	const GetChartGasMonthly = () => {
+		if (!gases || !gases.units) {
 			return;
 		}
 
 		const filteredGases = props.checkedItems
-			? props.checkedItems.filter( ( gas ) => gases && gases.hasOwnProperty( gas ) )
+			? props.checkedItems.filter((gas) => gases && gases.hasOwnProperty(gas))
 			: [];
 
 		const filteredGases2 = props.checkedItems
-			? props.checkedItems.filter( ( gas ) => gases2 && gases2.hasOwnProperty( gas ) )
+			? props.checkedItems.filter((gas) => gases2 && gases2.hasOwnProperty(gas))
 			: [];
 
-		const filteredUnits = Object.entries( ( gases && gases.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits = Object.entries((gases && gases.units) || {})
+			.filter(([key]) => filteredGases.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-		const filteredUnits2 = Object.entries( ( gases2 && gases2.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases2.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits2 = Object.entries((gases2 && gases2.units) || {})
+			.filter(([key]) => filteredGases2.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
 		const customSeriesColors = {
 			NO2: "#349bdb",
@@ -495,12 +427,12 @@ export default function LineChart ( props )
 			PM25: "#349bdb",
 		};
 
-		const seriesData = filteredGases.map( ( gas ) => ( {
+		const seriesData = filteredGases.map((gas) => ({
 			name: props.gasesStation2
-				? `${ gas } (${ filteredUnits[ gas ] || "" }): ${ props.station1 }`
-				: `${ gas } (${ filteredUnits[ gas ] || "" })`,
-			data: gases && gases[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+				? `${gas} (${filteredUnits[gas] || ""}): ${props.station1}`
+				: `${gas} (${filteredUnits[gas] || ""})`,
+			data: gases && gases[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
@@ -509,25 +441,25 @@ export default function LineChart ( props )
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const seriesData2 = filteredGases2.map( ( gas ) => ( {
-			name: `${ gas } (${ filteredUnits2[ gas ] || "" }): ${ props.station2 }`,
-			data: gases2 && gases2[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+		const seriesData2 = filteredGases2.map((gas) => ({
+			name: `${gas} (${filteredUnits2[gas] || ""}): ${props.station2}`,
+			data: gases2 && gases2[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
 				lineWidth: 1,
-				fillColor: customSeriesColors[ gas ],
+				fillColor: customSeriesColors[gas],
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const combinedSeriesData = [ ...seriesData, ...seriesData2 ];
+		const combinedSeriesData = [...seriesData, ...seriesData2];
 
-		setChartOptions( ( prevOptions ) => ( {
+		setChartOptions((prevOptions) => ({
 			...prevOptions,
 			series: combinedSeriesData,
 			chart: {
@@ -539,55 +471,53 @@ export default function LineChart ( props )
 			xAxis: {
 				...prevOptions.xAxis,
 				categories: filteredGases.length > 0
-					? gases[ filteredGases[ 0 ] ].map( ( [ time ] ) => time )
+					? gases[filteredGases[0]].map(([time]) => time)
 					: [],
 			},
 			yAxis: [
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[0]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] && prevOptions.yAxis[ 0 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[0] && prevOptions.yAxis[0].title),
+						text: `Concentrations (${filteredUnits[filteredGases[0]] || ""})`,
 					},
 				},
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[1]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] && prevOptions.yAxis[ 1 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases.slice( -1 )[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[1] && prevOptions.yAxis[1].title),
+						text: `Concentrations (${filteredUnits[filteredGases.slice(-1)[0]] || ""})`,
 					},
 					opposite: true,
 				},
 			],
-		} ) );
+		}));
 	};
 
-	const GetChartGasYearly = () =>
-	{
-		if ( !gases || !gases.yearly || !gases.units )
-		{
+	const GetChartGasYearly = () => {
+		if (!gases || !gases.yearly || !gases.units) {
 			return;
 		}
 
 		const filteredGases = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases && gases.yearly && gases.yearly.hasOwnProperty( gas )
+				(gas) => gases && gases.yearly && gases.yearly.hasOwnProperty(gas)
 			)
 			: [];
 
 		const filteredGases2 = props.checkedItems
 			? props.checkedItems.filter(
-				( gas ) => gases2 && gases2.yearly && gases2.yearly.hasOwnProperty( gas )
+				(gas) => gases2 && gases2.yearly && gases2.yearly.hasOwnProperty(gas)
 			)
 			: [];
 
-		const filteredUnits = Object.entries( ( gases && gases.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits = Object.entries((gases && gases.units) || {})
+			.filter(([key]) => filteredGases.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
-		const filteredUnits2 = Object.entries( ( gases2 && gases2.units ) || {} )
-			.filter( ( [ key ] ) => filteredGases2.includes( key ) )
-			.reduce( ( acc, [ key, value ] ) => ( { ...acc, [ key ]: value } ), {} );
+		const filteredUnits2 = Object.entries((gases2 && gases2.units) || {})
+			.filter(([key]) => filteredGases2.includes(key))
+			.reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
 		const customSeriesColors = {
 			NO2: "#349bdb",
@@ -605,12 +535,12 @@ export default function LineChart ( props )
 			PM25: "#349bdb",
 		};
 
-		const seriesData = filteredGases.map( ( gas ) => ( {
+		const seriesData = filteredGases.map((gas) => ({
 			name: props.gasesStation2
-				? `${ gas } (${ filteredUnits[ gas ] || "" }): ${ props.station1 }`
-				: `${ gas } (${ filteredUnits[ gas ] || "" })`,
-			data: gases && gases.yearly && gases.yearly[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+				? `${gas} (${filteredUnits[gas] || ""}): ${props.station1}`
+				: `${gas} (${filteredUnits[gas] || ""})`,
+			data: gases && gases.yearly && gases.yearly[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
@@ -619,25 +549,25 @@ export default function LineChart ( props )
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const seriesData2 = filteredGases2.map( ( gas ) => ( {
-			name: `${ gas } (${ filteredUnits2[ gas ] || "" }): ${ props.station2 }`,
-			data: gases2 && gases2.yearly && gases2.yearly[ gas ].map( ( [ time, value ] ) => [ time, value ] ),
-			color: customSeriesColors[ gas ],
+		const seriesData2 = filteredGases2.map((gas) => ({
+			name: `${gas} (${filteredUnits2[gas] || ""}): ${props.station2}`,
+			data: gases2 && gases2.yearly && gases2.yearly[gas].map(([time, value]) => [time, value]),
+			color: customSeriesColors[gas],
 			marker: {
 				enabled: true,
 				radius: 3.4,
 				lineWidth: 1,
-				fillColor: customSeriesColors[ gas ],
+				fillColor: customSeriesColors[gas],
 				symbol: "circle",
 				lineColor: null,
 			},
-		} ) );
+		}));
 
-		const combinedSeriesData = [ ...seriesData, ...seriesData2 ];
+		const combinedSeriesData = [...seriesData, ...seriesData2];
 
-		setChartOptions( ( prevOptions ) => ( {
+		setChartOptions((prevOptions) => ({
 			...prevOptions,
 			series: combinedSeriesData,
 			chart: {
@@ -649,32 +579,32 @@ export default function LineChart ( props )
 			xAxis: {
 				...prevOptions.xAxis,
 				categories: filteredGases.length > 0
-					? gases.yearly[ filteredGases[ 0 ] ].map( ( [ time ] ) => time )
+					? gases.yearly[filteredGases[0]].map(([time]) => time)
 					: [],
 			},
 			yAxis: [
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[0]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 0 ] && prevOptions.yAxis[ 0 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[0] && prevOptions.yAxis[0].title),
+						text: `Concentrations (${filteredUnits[filteredGases[0]] || ""})`,
 					},
 				},
 				{
-					...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] ),
+					...(prevOptions.yAxis && prevOptions.yAxis[1]),
 					title: {
-						...( prevOptions.yAxis && prevOptions.yAxis[ 1 ] && prevOptions.yAxis[ 1 ].title ),
-						text: `Concentrations (${ filteredUnits[ filteredGases.slice( -1 )[ 0 ] ] || "" })`,
+						...(prevOptions.yAxis && prevOptions.yAxis[1] && prevOptions.yAxis[1].title),
+						text: `Concentrations (${filteredUnits[filteredGases.slice(-1)[0]] || ""})`,
 					},
 					opposite: true,
 				},
 			],
-		} ) );
+		}));
 	};
 
 	return (
 		<div id="line-chart">
-			<HighchartsReact highcharts={ Highcharts } options={ chartOptions } />
+			<HighchartsReact highcharts={Highcharts} options={chartOptions} />
 		</div>
 	);
 }

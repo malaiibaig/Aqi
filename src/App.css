@@ -1,0 +1,1552 @@
+:root {
+	--primary: #04253c;
+	--secondary: #9f8b66;
+}
+
+html {
+	font-size: 62.5%;
+	position: relative;
+}
+
+.infoBox {
+    overflow: visible !important;
+	height: 0 !important;
+	z-index: -99999 !important;
+}
+
+div[role="button"][tabindex="-1"][aria-describedby] {
+    z-index: 99999 !important;
+}
+
+
+.boxs {
+	box-shadow: 0 0.1vw 0.4vw 0 #111111a8;
+}
+
+.boxm {
+	box-shadow: 0.4vw 0.4vw 0.4vw 0 #0000005c;
+}
+
+.aqi-bg {
+	background: linear-gradient(to right, #92d050, #559753) !important;
+}
+
+.homeSvg {
+	height: 2vw;
+	width: 2vw;
+}
+
+.svg {
+	height: 4vw;
+	margin-top: -0.4vw;
+}
+
+.react-datepicker__month .react-datepicker__month-text,
+.react-datepicker__month .react-datepicker__quarter-text,
+.react-datepicker-year-header {
+	font-size: 1.2vw !important;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+.anchor {
+	text-transform: uppercase;
+	display: inline-block;
+	position: relative;
+}
+
+.anchor:after {
+	background: none repeat scroll 0 0 transparent;
+	bottom: -0.8vw;
+	content: "";
+	display: block;
+	height: 0.3vw;
+	left: 50%;
+	position: absolute;
+	background: var(--secondary);
+	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+	width: 0;
+}
+
+.anchor:before {
+	background: none repeat scroll 0 0 transparent;
+	bottom: -0.6vw;
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	left: 40%;
+	position: absolute;
+	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
+
+.anchor1:before {
+	left: 30%;
+}
+
+.anchor:hover:before {
+	border-left: 0.5vw solid transparent;
+	border-right: 0.5vw solid transparent;
+	border-bottom: 0.6vw solid var(--secondary);
+}
+
+.anchor:hover:after {
+	width: 100%;
+	left: 0;
+}
+
+.exp-aqi:after {
+	background: none repeat scroll 0 0 transparent;
+	top: 1%;
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 1.4vw solid transparent;
+	border-bottom: 1.4vw solid transparent;
+	right: -6%;
+	position: absolute;
+	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
+
+.exp-aqi1:after {
+	border-left: 1.8vw solid #559753;
+}
+
+.exp-aqi2:after {
+	border-left: 1.8vw solid #d6c20d;
+}
+
+.exp-aqi3:after {
+	border-left: 1.8vw solid #ff9800;
+}
+
+.exp-aqi4:after {
+	border-left: 1.8vw solid #cc0c0c;
+}
+
+.exp-aqi5:after {
+	border-left: 1.8vw solid #7b0090;
+}
+
+.exp-aqi6:after {
+	border-left: 1.8vw solid #420320;
+}
+
+.chart-tab:hover {
+	font-weight: 600;
+	color: black;
+}
+
+.chart-tab:after {
+	background: none repeat scroll 0 0 transparent;
+	bottom: -0.2vw;
+	content: "";
+	display: block;
+	height: 0.26vw;
+	left: 0%;
+	position: absolute;
+	background: #e7e7e7;
+	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+	width: 0;
+	width: 100%;
+}
+
+.chart-tab:before {
+	background: none repeat scroll 0 0 transparent;
+	bottom: -0.2vw;
+	content: "";
+	display: block;
+	height: 0.26vw;
+	left: 0%;
+	position: absolute;
+	background: var(--primary);
+	transition: width 1s ease 0s, left 1s ease 0s;
+	width: 0;
+	z-index: 98;
+}
+
+.chart-tab:hover:before {
+	width: 100%;
+	left: 0;
+}
+
+.chart-active {
+	font-weight: 600;
+	color: black;
+}
+
+.chart-active:after {
+	background: none repeat scroll 0 0 transparent;
+	bottom: -0.2vw;
+	content: "";
+	display: block;
+	height: 0.26vw;
+	left: 0%;
+	position: absolute;
+	background: var(--primary);
+	transition: width 0.3s ease 0s, left 0.3s ease 0s;
+	width: 100%;
+	z-index: 98;
+}
+
+.highcharts-title {
+	fill: #434348;
+	font-weight: bold;
+	font-size: 1vw !important;
+}
+
+.charts {
+	overflow-y: hidden;
+}
+
+.highcharts-root,
+.highcharts-container {
+	width: 44vw;
+	height: 58vh !important;
+	margin: 0 auto auto auto;
+}
+
+#barChart .highcharts-root,
+#barChart .highcharts-container {
+	width: 44vw;
+	height: 66vh !important;
+	margin: 0 auto auto auto;
+}
+
+.zoom {
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	text-transform: uppercase;
+	z-index: 98;
+}
+
+.zoom:focus,
+.zoom:active {
+	box-shadow: 0 0 0 0.26vw rgba(58, 176, 195, 0.5);
+}
+
+.zoom:after {
+	content: "";
+	width: calc(100%);
+	height: 100%;
+	background-color: rgba(24, 9, 53, 0.77);
+	border-top-right-radius: 1.5625rem;
+	border-bottom-left-radius: 1.5625rem;
+	position: absolute;
+	top: 0;
+	opacity: 0;
+	left: -1px;
+	border: 1px solid transparent;
+	z-index: -1;
+	transition: all 0.2s ease-in-out;
+}
+
+.zoom:hover:after {
+	top: -6px;
+	opacity: 1;
+}
+
+.mat-div {
+	box-shadow: 0 0 1vw 0 #0000001c;
+}
+
+::-webkit-scrollbar {
+	width: 0.5vw;
+	height: 0.5vw;
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--primary);
+	border-radius: 0.4vw;
+}
+
+.pulse {
+	animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+.gm-style-iw button {
+	display: none !important;
+}
+
+.gm-ui-hover-effect > span {
+	background-color: white;
+}
+
+.gm-style-iw {
+	padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-d {
+	overflow: auto !important;
+	width: 14vw !important;
+	border-radius: none !important;
+}
+
+.gm-style .gm-style-iw-c {
+	border-radius: 0.4vw !important;
+}
+
+.gmnoprint,
+.gm-control-active,
+.gm-style-cc {
+	display: none !important;
+}
+
+.custom-width {
+	width: 60vw !important;
+	max-width: 60vw !important;
+}
+
+.custom-height {
+	height: 36% !important;
+	max-height: 36% !important;
+}
+
+.custom-height13 {
+	min-height: 12vw !important;
+	max-height: auto !important;
+}
+
+.custom-width2 {
+	width: 40vw !important;
+	max-width: 40vw !important;
+}
+
+.custom-width4 {
+	min-width: 40vw !important;
+	max-width: 70vw !important;
+}
+
+.custom-height2 {
+	min-height: 26vw !important;
+	max-height: auto !important;
+}
+
+.custom-height2 {
+	min-height: 14vw !important;
+	max-height: auto !important;
+}
+
+.custom-width3 {
+	width: 40vw !important;
+	max-width: 40vw !important;
+}
+
+.custom-height3 {
+	min-height: 20vw !important;
+	max-height: auto !important;
+}
+
+.custom-height4 {
+	min-height: 28vw !important;
+	max-height: 80vh !important;
+	overflow-y: auto;
+}
+
+.custom-width5 {
+	width: 40vw !important;
+	max-width: 40vw !important;
+}
+
+.custom-height5 {
+	height: 36vw !important;
+	max-height: 40vw !important;
+}
+
+.custom-width6 {
+	width: 40vw !important;
+	max-width: 40vw !important;
+}
+
+.custom-height6 {
+	min-height: 26vw !important;
+	max-height: 100vw !important;
+}
+
+.custom-width7 {
+	width: 40vw !important;
+	max-width: 40vw !important;
+}
+
+.custom-height7 {
+	min-height: 15vw !important;
+	max-height: 60vw !important;
+}
+
+.custom-height8 {
+	min-height: 12vw !important;
+	max-height: 60vw !important;
+}
+
+.css-t3ipsp-control {
+	box-shadow: none !important;
+	border: 2px solid var(--primary) !important;
+}
+
+.react-datepicker-wrapper {
+	border: 1px solid hsl(0, 0%, 70%) !important;
+	border-radius: 0.2vw;
+	width: 100% !important;
+}
+
+.react-datepicker-wrapper input {
+	border: none !important;
+	border-radius: 0.2vw !important;
+}
+
+input.react-datepicker-ignore-onclickoutside {
+	width: 100% !important;
+}
+
+.react-datepicker__view-calendar-icon input {
+	width: 100%;
+}
+
+.react-datepicker__view-calendar-icon input {
+	padding: 6px 10px 5px 35px !important;
+}
+
+.react-multi-email {
+	border-radius: 0.2vw !important;
+	padding: 0 !important;
+	border: 1px solid hsl(0, 0%, 70%) !important;
+}
+
+.css-qbdosj-Input input,
+.css-qbdosj-Input input:focus,
+.css-qbdosj-Input input:active,
+[type="text"]:focus {
+	border: none !important;
+	--tw-ring-color: transparent !important;
+}
+
+.react-multi-email > input {
+	border-radius: 0.2vw !important;
+	padding: 0 !important;
+	font-size: 1.2vw !important;
+	border: 1px solid hsl(0, 0%, 70%) !important;
+}
+.react-multi-email.empty > span[data-placeholder] {
+	font-size: 1.2vw !important;
+	padding: 0.1vw !important;
+}
+
+.react-multi-email [data-tag] {
+	font-size: 0.8vw !important;
+}
+
+#guageChart .highcharts-root,
+#guageChart .highcharts-container {
+	width: 70%;
+	height: 40vh !important;
+	margin: 0.4vw auto;
+}
+
+#lineChart-modal .highcharts-root,
+#lineChart-modal .highcharts-container {
+	width: 96%;
+	height: 66vh !important;
+	margin: 0.4vw auto;
+}
+
+#barChart-modal .highcharts-root,
+#barChart-modal .highcharts-container {
+	width: 96%;
+	height: 66vh !important;
+	margin: 0.4vw auto;
+}
+
+#matChart-modal .highcharts-root,
+#matChart-modal .highcharts-container {
+	width: 96%;
+	height: 66vh !important;
+	margin: 0.4vw auto;
+}
+
+#windChart-modal .highcharts-root,
+#windChart-modal .highcharts-container {
+	width: 96%;
+	height: 66vh !important;
+	margin: 0.4vw auto;
+}
+
+.swiper-slide {
+	width: max-content !important;
+	padding: 0 0.36vw !important;
+	font-weight: 500;
+}
+
+.swiper-android .swiper-slide,
+.swiper-ios .swiper-slide,
+.swiper-wrapper {
+	align-items: center;
+}
+
+.review-swiper-button-prev.disabled,
+.review-swiper-button-next.disabled {
+	fill: #d1d5db !important;
+	pointer-events: none;
+}
+
+.btn-bg {
+	background: #9F8B66 !important;
+}
+
+.highcharts-pane-group path {
+	fill: transparent !important;
+	stroke: transparent !important;
+}
+
+.active-station {
+	background: var(--secondary);
+	color: white;
+	font-size: 1.4vw !important;
+	box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
+	padding: 0 0.2vw 0 0.2vw;
+	margin-top: -0.3vw;
+}
+
+text {
+	font-size: 1.2rem !important;
+}
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+	top: 0.4rem !important;
+	width: 1.6rem !important;
+	height: 1.6rem !important;
+	fill: var(--secondary) !important;
+}
+
+.gm-style-iw-ch {
+	padding-top: 0 !important;
+}
+
+[type="text"]:focus,
+[type="email"]:focus,
+[type="url"]:focus,
+[type="password"]:focus,
+[type="number"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="time"]:focus,
+[type="week"]:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	--tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+	--tw-ring-offset-width: 0px;
+	--tw-ring-offset-color: #fff;
+	--tw-ring-color: var(--primary) !important;
+	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+		var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+		calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+		var(--tw-shadow);
+	border-color: var(--primary) !important;
+}
+
+::file-selector-button {
+	background: var(--secondary) !important;
+	margin: 0.2vw !important;
+	font-size: 1vw !important;
+}
+
+.my-hidden{
+	display:none;
+}
+
+@media (min-width: 300px) and (max-width: 530px) {
+	#line-chart {
+		height: 57.6vh;
+		margin-top: 8rem;
+	}
+
+	div[data-highcharts-chart] {
+		overflow: visible !important;
+		height: 60vh;
+	}
+
+	#highcharts-r5ue8pn-55{
+		overflow: visible !important;
+	}
+
+	#lineChart-modal #line-chart .highcharts-root {
+		height: 44rem !important;
+		margin-top: -12rem !important;
+	}
+
+	::file-selector-button {
+		background: var(--secondary) !important;
+		margin: 0.2vw !important;
+		font-size: 1.4rem !important;
+	}
+
+	.react-multi-email > input {
+		font-size: 1.4rem !important;
+	}
+	.react-multi-email.empty > span[data-placeholder] {
+		font-size: 1.4rem !important;
+	}
+
+	.react-multi-email [data-tag] {
+		font-size: 1rem !important;
+	}
+
+	.react-datepicker__month .react-datepicker__month-text,
+	.react-datepicker__month .react-datepicker__quarter-text,
+	.react-datepicker-year-header {
+		font-size: 1.4rem !important;
+	}
+
+	.exp-aqi:after {
+		display: none;
+	}
+
+	.active-station {
+		font-size: 1.4rem !important;
+	}
+
+	.highcharts-title {
+		fill: #434348;
+		font-weight: bold;
+		font-size: 1.4rem !important;
+	}
+
+	#lineChart-modal .highcharts-root,
+	#lineChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 36vh !important;
+		margin: -2vw auto auto auto !important;
+	}
+
+	#barChart-modal .highcharts-root,
+	#barChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 26vh !important;
+		margin: -2vw auto auto auto !important;
+	}
+
+	#windChart-modal .highcharts-root,
+	#windChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 26vh !important;
+		margin: -2vw auto auto auto !important;
+	}
+
+	#matChart-modal .highcharts-root,
+	#matChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 26vh !important;
+		margin: 4vw auto auto auto !important;
+	}
+
+	#line-chart .highcharts-root,
+	#line-chart .highcharts-container {
+		width: 36rem;
+		height: 32rem !important;
+	}
+
+	#barChart .highcharts-root{
+		width: 34rem;
+		height: 36rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	#barChart .highcharts-container {
+		width: 34rem;
+		height: 36rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	#mat-chart .highcharts-root,
+	#mat-chart .highcharts-container {
+		width: 36rem;
+        height: 32rem !important;
+        margin: 0.1rem auto auto auto;
+	}
+
+	#windChart .highcharts-root,
+	#windChart .highcharts-container {
+		width: 30rem;
+        height: 34rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#windChartMob .highcharts-root,
+	#windChartMob .highcharts-container {
+		width: 90vw;
+		height: 68vh !important;
+		margin: 1rem auto 4rem auto;
+	}
+
+	#guageChart .highcharts-root,
+	#guageChart .highcharts-container {
+		width: 28rem;
+		height: 30rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	.custom-width {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height {
+		height: 70vh !important;
+		max-height: 70vh !important;
+	}
+
+	.custom-height8 {
+		min-height: 54vw !important;
+		max-height: 60vw !important;
+	}
+
+	#guageChart text {
+		font-size: 1.1rem;
+	}
+
+	.custom-width2 {
+		width: 96vw !important;
+		max-width: 96vw !important;
+	}
+
+	.custom-height2 {
+		min-height: 60vw !important;
+		max-height: auto !important;
+	}
+
+	.custom-width3 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height3 {
+		min-height: 20vw !important;
+		max-height: auto !important;
+	}
+
+	.react-datepicker__view-calendar-icon input {
+		padding: 10px 10px 10px 35px !important;
+	}
+
+	.react-datepicker__input-container .react-datepicker__calendar-icon {
+		top: 0.7rem !important;
+	}
+
+	.custom-width5 {
+		width: 98vw !important;
+		max-width: 98vw !important;
+	}
+
+	.custom-height5 {
+		height: 36rem !important;
+		max-height: 40rem !important;
+	}
+
+	.custom-width4 {
+		width: 98vw !important;
+		max-width: 98vw !important;
+	}
+	.custom-height4 {
+		height: 94vh !important;
+		max-height: 94vh !important;
+		overflow-y: scroll !important;
+	}
+
+	.custom-width6 {
+		width: 100vw !important;
+		max-width: 100vw !important;
+	}
+
+	.custom-height6 {
+		min-height: 60vh !important;
+		max-height: 100vh !important;
+	}
+
+	.custom-width7 {
+		width: 96vw !important;
+		max-width: 96vw !important;
+	}
+
+	.custom-height7 {
+		min-height: 14rem !important;
+		max-height: 30rem !important;
+	}
+}
+
+@media (min-width: 531px) and (max-width: 767px) {
+	#line-chart {
+		height: 57.6vh;
+		margin-top: 8rem;
+	}
+
+	div[data-highcharts-chart] {
+		overflow: visible !important;
+		height: 56vh;
+	}
+
+	#highcharts-r5ue8pn-55{
+		overflow: visible !important;
+	}
+
+	#lineChart-modal #line-chart .highcharts-root {
+		height: 60rem !important;
+		margin-top: -12rem !important;
+	}
+	
+	::file-selector-button {
+		background: var(--secondary) !important;
+		margin: 0.2vw !important;
+		font-size: 1.6rem !important;
+	}
+	.react-multi-email > input {
+		font-size: 1.6rem !important;
+	}
+	.react-multi-email.empty > span[data-placeholder] {
+		font-size: 1.6rem !important;
+	}
+
+	.react-multi-email [data-tag] {
+		font-size: 1.2rem !important;
+	}
+	.react-datepicker__month .react-datepicker__month-text,
+	.react-datepicker__month .react-datepicker__quarter-text,
+	.react-datepicker-year-header {
+		font-size: 1.8rem !important;
+	}
+
+	.exp-aqi:after {
+		display: none;
+	}
+
+	.active-station {
+		font-size: 1.6rem !important;
+	}
+
+	.highcharts-title {
+		fill: #434348;
+		font-weight: bold;
+		font-size: 1.6rem !important;
+	}
+
+	#line-chart .highcharts-root,
+	#line-chart .highcharts-container {
+		width: 56rem;
+        height: 52rem !important;
+	}
+
+	#barChart .highcharts-root{
+		width: 54rem;
+        height: 56rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#barChart .highcharts-container {
+		width: 34rem;
+		height: 56rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	#mat-chart .highcharts-root,
+	#mat-chart .highcharts-container {
+		width: 52rem;
+        height: 52rem !important;
+        margin: 0.1rem auto auto auto;
+	}
+
+	#windChart .highcharts-root{
+		width: 52rem;
+        height: 50rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#windChart .highcharts-container {
+		width: 36rem;
+        height: 50rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#windChartMob .highcharts-root,
+	#windChartMob .highcharts-container {
+		width: 90vw;
+		height: 70vh !important;
+		margin: 1rem auto 4rem auto;
+	}
+
+	#guageChart .highcharts-root,
+	#guageChart .highcharts-container {
+		width: 38rem;
+		height: 30rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	.custom-width {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height {
+		height: 60vh !important;
+		max-height: 60vh !important;
+	}
+
+	#lineChart-modal .highcharts-root,
+	#lineChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 46vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#barChart-modal .highcharts-root,
+	#barChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 46vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#windChart-modal .highcharts-root,
+	#windChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 46vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#matChart-modal .highcharts-root,
+	#matChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 46vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	.custom-width2 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height2 {
+		min-height: 42vw !important;
+		max-height: auto !important;
+	}
+
+	.custom-height8 {
+		min-height: 32vw !important;
+		max-height: 60vw !important;
+	}
+
+	.custom-width3 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height3 {
+		min-height: 20vw !important;
+		max-height: auto !important;
+	}
+
+	.react-datepicker__view-calendar-icon input {
+		padding: 10px 10px 10px 35px !important;
+	}
+
+	.react-datepicker__input-container .react-datepicker__calendar-icon {
+		top: 0.7rem !important;
+	}
+
+	.custom-width5 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height5 {
+		height: 70vw !important;
+		max-height: 80vw !important;
+	}
+
+	.custom-width4 {
+		width: 98vw !important;
+		max-width: 98vw !important;
+	}
+	.custom-height4 {
+		height: 94vh !important;
+		max-height: 94vh !important;
+		overflow-y: scroll !important;
+	}
+
+	.custom-width6 {
+		width: 100vw !important;
+		max-width: 100vw !important;
+	}
+
+	.custom-height6 {
+		min-height: 44vh !important;
+		max-height: 100vh !important;
+	}
+
+	.custom-width7 {
+		width: 96vw !important;
+		max-width: 96vw !important;
+	}
+
+	.custom-height7 {
+		min-height: 18rem !important;
+		max-height: 30rem !important;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+	#line-chart {
+		height: 57.6vh;
+		margin-top: 8rem;
+	}
+
+	div[data-highcharts-chart] {
+		overflow: visible !important;
+		height: 56vh;
+	}
+
+	#highcharts-r5ue8pn-55{
+		overflow: visible !important;
+	}
+
+	#lineChart-modal #line-chart .highcharts-root {
+		height: 60rem !important;
+		margin-top: -12rem !important;
+	}
+
+	::file-selector-button {
+		background: var(--secondary) !important;
+		margin: 0.2vw !important;
+		font-size: 1.8rem !important;
+	}
+	.react-multi-email > input {
+		font-size: 1.8rem !important;
+	}
+	.react-multi-email.empty > span[data-placeholder] {
+		font-size: 1.8rem !important;
+	}
+
+	.react-multi-email [data-tag] {
+		font-size: 1.4rem !important;
+	}
+	.react-datepicker__month .react-datepicker__month-text,
+	.react-datepicker__month .react-datepicker__quarter-text,
+	.react-datepicker-year-header {
+		font-size: 1.8rem !important;
+	}
+
+	.exp-aqi:after {
+		display: none;
+	}
+
+	.active-station {
+		font-size: 2rem !important;
+	}
+
+	.highcharts-title {
+		fill: #434348;
+		font-weight: bold;
+		font-size: 2.6rem !important;
+	}
+
+	#line-chart .highcharts-root,
+	#line-chart .highcharts-container {
+		width: 66rem;
+        height: 58rem !important;
+	}
+
+	#barChart .highcharts-root{
+		width: 74rem;
+        height: 62rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#barChart .highcharts-container {
+		width: 34rem;
+		height: 66rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	#mat-chart .highcharts-root,
+	#mat-chart .highcharts-container {
+		width: 68rem;
+        height: 56rem !important;
+        margin: 0.1rem auto auto auto;
+	}
+
+	#windChart .highcharts-root{
+		width: 68rem;
+        height: 56rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#windChart .highcharts-container {
+		width: 36rem;
+        height: 50rem !important;
+        margin: 0 auto auto auto;
+	}
+
+	#windChartMob .highcharts-root,
+	#windChartMob .highcharts-container {
+		width: 72rem;
+		height: 70rem !important;
+		margin: 1rem auto 4rem auto;
+	}
+
+	#guageChart .highcharts-root,
+	#guageChart .highcharts-container {
+		width: 48rem;
+		height: 40rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	.custom-width {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height {
+		height: 60vh !important;
+		max-height: 60vh !important;
+	}
+
+	.custom-height8 {
+		min-height: 24vw !important;
+		max-height: 60vw !important;
+	}
+
+	#lineChart-modal .highcharts-root,
+	#lineChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 48vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#barChart-modal .highcharts-root,
+	#barChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 50vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#windChart-modal .highcharts-root,
+	#windChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 50vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#matChart-modal .highcharts-root,
+	#matChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 50vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	.custom-width2 {
+		width: 80vw !important;
+		max-width: 80vw !important;
+	}
+
+	.custom-height2 {
+		min-height: 40vw !important;
+		max-height: auto !important;
+	}
+
+	.custom-width3 {
+		width: 80vw !important;
+		max-width: 80vw !important;
+	}
+
+	.custom-height3 {
+		min-height: 20vw !important;
+		max-height: auto !important;
+	}
+
+	.react-datepicker__view-calendar-icon input {
+		padding: 10px 10px 10px 35px !important;
+	}
+
+	.react-datepicker__input-container .react-datepicker__calendar-icon {
+		top: 0.7rem !important;
+	}
+
+	.custom-width5 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height5 {
+		height: 62vw !important;
+		max-height: 70vw !important;
+	}
+
+	.custom-width4 {
+		width: 98vw !important;
+		max-width: 98vw !important;
+	}
+	.custom-height4 {
+		height: 94vh !important;
+		max-height: 94vh !important;
+		overflow-y: scroll !important;
+	}
+
+	.custom-width6 {
+		width: 100vw !important;
+		max-width: 100vw !important;
+	}
+
+	.custom-height6 {
+		min-height: 44vh !important;
+		max-height: 100vh !important;
+	}
+
+	.custom-width7 {
+		width: 76vw !important;
+		max-width: 76vw !important;
+	}
+
+	.custom-height7 {
+		min-height: 20rem !important;
+		max-height: 30rem !important;
+	}
+}
+
+@media (min-width: 993px) and (max-width: 1199px) {
+	::file-selector-button {
+		background: var(--secondary) !important;
+		margin: 0.2vw !important;
+		font-size: 1.6vw !important;
+	}
+	.react-multi-email > input {
+		font-size: 1.6vw !important;
+	}
+	.react-multi-email.empty > span[data-placeholder] {
+		font-size: 1.6vw !important;
+	}
+
+	.react-multi-email [data-tag] {
+		font-size: 1.2vw !important;
+	}
+	.react-datepicker__month .react-datepicker__month-text,
+	.react-datepicker__month .react-datepicker__quarter-text,
+	.react-datepicker-year-header {
+		font-size: 1.6vw !important;
+	}
+
+	.exp-aqi:after {
+		display: none;
+	}
+
+	.active-station {
+		font-size: 1.6vw !important;
+	}
+
+	.highcharts-title {
+		fill: #434348;
+		font-weight: bold;
+		font-size: 1.6vw !important;
+	}
+
+	#line-chart .highcharts-root,
+	#line-chart .highcharts-container {
+		width: 54rem;
+		height: 40rem !important;
+		margin: 2.4rem auto auto auto;
+	}
+
+	#barChart .highcharts-root,
+	#barChart .highcharts-container {
+		width: 60rem;
+		height: 48rem !important;
+		margin: 0 auto auto auto;
+	}
+
+	#mat-chart .highcharts-root,
+	#mat-chart .highcharts-container {
+		width: 60rem;
+		height: 54rem !important;
+		margin: 1rem auto auto auto;
+	}
+
+	#windChart .highcharts-root,
+	#windChart .highcharts-container {
+		width: 72rem;
+		height: 42rem !important;
+		margin: 1rem auto auto auto;
+	}
+
+	#windChartMob .highcharts-root,
+	#windChartMob .highcharts-container {
+		width: 90vw;
+		height: 90vw !important;
+		margin: 1rem auto 4rem auto;
+	}
+
+	#guageChart .highcharts-root,
+	#guageChart .highcharts-container {
+		width: 90%;
+		height: 32vh !important;
+		margin: 0.4vw auto;
+	}
+
+	.custom-width {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height {
+		height: 50vh !important;
+		max-height: 50vh !important;
+	}
+
+	#lineChart-modal .highcharts-root,
+	#lineChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 44vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#barChart-modal .highcharts-root,
+	#barChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 44vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#windChart-modal .highcharts-root,
+	#windChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 44vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#matChart-modal .highcharts-root,
+	#matChart-modal .highcharts-container {
+		width: 96% !important;
+		height: 44vh !important;
+		margin: 1vw auto auto auto !important;
+	}
+
+	#guageChart text {
+		font-size: 1.1rem;
+	}
+
+	.custom-width2 {
+		width: 80vw !important;
+		max-width: 80vw !important;
+	}
+
+	.custom-height2 {
+		min-height: 32vw !important;
+		max-height: auto !important;
+	}
+
+	.custom-height8 {
+		min-height: 18vw !important;
+		max-height: 60vw !important;
+	}
+
+	.custom-width3 {
+		width: 80vw !important;
+		max-width: 80vw !important;
+	}
+
+	.custom-height3 {
+		min-height: 20vw !important;
+		max-height: auto !important;
+	}
+
+	.react-datepicker__view-calendar-icon input {
+		padding: 10px 10px 10px 35px !important;
+	}
+
+	.react-datepicker__input-container .react-datepicker__calendar-icon {
+		top: 0.7rem !important;
+	}
+
+	.custom-width5 {
+		width: 90vw !important;
+		max-width: 90vw !important;
+	}
+
+	.custom-height5 {
+		height: 48vw !important;
+		max-height: 94vw !important;
+	}
+
+	.custom-width4 {
+		width: 98vw !important;
+		max-width: 98vw !important;
+	}
+
+	.custom-height4 {
+		height: 94vw !important;
+		max-height: 94vw !important;
+		overflow-y: scroll !important;
+	}
+
+	.custom-width6 {
+		width: 50vw !important;
+		max-width: 50vw !important;
+	}
+
+	.custom-height6 {
+		min-height: 44vw !important;
+		max-height: 80vh !important;
+	}
+
+	.custom-width7 {
+		width: 60vw !important;
+		max-width: 60vw !important;
+	}
+
+	.custom-height7 {
+		min-height: 24rem !important;
+		max-height: 30rem !important;
+	}
+}
+
+@media (min-height: 300px) and (max-height: 500px){
+	.map-container{
+		height: 130vw !important;
+	}
+
+	.charts {
+		min-height: 126vw !important;
+	}
+	
+	#line-chart {
+		height: 90vw !important;
+		margin-top: 0 !important;
+	}
+
+	#line-chart .highcharts-root, #line-chart .highcharts-container {
+        width: 46rem;
+        height: 60rem !important;
+    }
+
+	div[data-highcharts-chart] {
+		overflow: visible !important;
+		height: 160vh !important;
+	}
+
+	#lineChart-modal .highcharts-root, #lineChart-modal .highcharts-container {
+        width: 86% !important;
+        height: 100% !important;
+        margin: 1vw auto auto auto !important;
+    }
+
+	#lineChart-modal .custom-height {
+        height: 120vh !important;
+        max-height: 120vh !important;
+    }
+
+	.custom-height {
+        height: 80vh !important;
+        max-height: 80vh !important;
+    }
+
+	#barChart-modal .highcharts-root, #barChart-modal .highcharts-container {
+        height: 64vh !important;
+    }
+
+	#windChart-modal .highcharts-root, #windChart-modal .highcharts-container {
+        height: 62vh !important;
+	}
+
+	#matChart-modal .highcharts-root, #matChart-modal .highcharts-container {
+        height: 62vh !important;
+	}
+
+}
+
+@media (min-height: 500px) and (max-height: 700px) and (orientation: landscape;){
+	.map-container{
+		height: 130vw !important;
+	}
+
+	.charts {
+        min-height: 100vh !important;
+		padding-bottom: 2rem;
+    }
+	
+	#line-chart {
+		height: 60vw !important;
+		margin-top: 0 !important;
+	}
+
+	#line-chart .highcharts-root, #line-chart .highcharts-container {
+        width: 60rem;
+        height: 70rem !important;
+    }
+
+	div#mat-chart {
+    	height: 60rem;
+	}
+
+	div[data-highcharts-chart] {
+		overflow: visible !important;
+		height: 120vh !important;
+	}
+
+	#lineChart-modal .highcharts-root, #lineChart-modal .highcharts-container {
+        width: 86% !important;
+        height: 100% !important;
+        margin: 1vw auto auto auto !important;
+    }
+
+	#lineChart-modal .custom-height {
+        height: 90vh !important;
+        max-height: 90vh !important;
+    }
+
+	.custom-height {
+        height: 80vh !important;
+        max-height: 80vh !important;
+    }
+
+	#barChart-modal .highcharts-root, #barChart-modal .highcharts-container {
+        height: 64vh !important;
+    }
+
+	#windChart-modal .highcharts-root, #windChart-modal .highcharts-container {
+        height: 62vh !important;
+	}
+
+	#matChart-modal .highcharts-root, #matChart-modal .highcharts-container {
+        height: 68vh !important;
+	}
+
+	div#windChart {
+		height: 56rem;
+	}
+
+	div#barChart {
+		height: 60rem;
+	}
+
+}

@@ -7,8 +7,9 @@ import
 		PolygonF,
 		InfoBoxF
 	} from "@react-google-maps/api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { home, username, password } from "../../Variables";
+import { get_home_data } from "../../lib/constants";
 
 const Map = ( props ) =>
 {
@@ -181,38 +182,18 @@ const Map = ( props ) =>
 
 	const GetStations = async () =>
 	{
-		const requestOptions = {
-			method: "GET",
-			redirect: "follow",
-			headers: {
-				"Authorization": "Basic " + btoa( `${ username }:${ password }` ),
-			},
-		};
-
-		fetch( home, requestOptions )
-			.then( ( response ) => response.json() )
-			.then( ( result ) =>
-			{
-				if ( Array.isArray( result.stations_array ) )
-				{
-					const apiStations = result.stations_array.map( ( station ) => ( {
-						address: station.title,
-						lat: parseFloat( station.lat ),
-						lng: parseFloat( station.long ),
-						lngPos: station.lat - 12,
-						color: props.pollutant === "gas" ? station.fillColour : station.pfillColour,
-						id: station.id,
-						aqi: props.pollutant === "gas" ? station.aqi : station.paqi,
-						bgColor: props.pollutant === "gas" ? station.fillColour : station.pfillColour,
-						aqiTitle: props.pollutant === "gas" ? station.aqi_title : station.paqi_title,
-					} ) );
-					setMarkers( apiStations );
-				} else
-				{
-					console.error( "Stations data is not an array:", result.stations );
-				}
-			} )
-			.catch( ( error ) => console.error( error ) );
+		const apiStations = get_home_data.stations_array.map( ( station ) => ( {
+			address: station.title,
+			lat: parseFloat( station.lat ),
+			lng: parseFloat( station.long ),
+			lngPos: station.lat - 12,
+			color: props.pollutant === "gas" ? station.fillColour : station.pfillColour,
+			id: station.id,
+			aqi: props.pollutant === "gas" ? station.aqi : station.paqi,
+			bgColor: props.pollutant === "gas" ? station.fillColour : station.pfillColour,
+			aqiTitle: props.pollutant === "gas" ? station.aqi_title : station.paqi_title,
+		} ) );
+		setMarkers( apiStations );
 	};
 
 	useEffect( () =>
